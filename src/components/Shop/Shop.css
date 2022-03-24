@@ -1,0 +1,17 @@
+.product-container {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+.shop-container {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-left: 140px;
+  margin-right: 40px;
+}
+.order-summery {
+  background: rgba(255, 153, 0, 0.3);
+
+  padding: 10px;
+}
