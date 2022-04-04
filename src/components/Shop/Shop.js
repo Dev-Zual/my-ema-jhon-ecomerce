@@ -1,33 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useCart from '../../hooks/useCart';
+import useProducts from '../../hooks/useProducts';
 import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
+import Orders from '../Orders/Orders';
 import Product from '../Product/Product';
 import './Shop.css';
 
 const Shop = () => {
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    fetch('products.json')
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
-
-  useEffect(() => {
-    const storedCart = getStoredCart();
-    const saveCart = [];
-    for (const id in storedCart) {
-      const addedProduct = products.find((product) => product.id === id);
-      if (addedProduct) {
-        const quantity = storedCart[id];
-        addedProduct.quantity = quantity;
-        saveCart.push(addedProduct);
-        console.log(addedProduct);
-      }
-    }
-    setCart(saveCart);
-  }, [products]);
+  const [products, setProducts] = useProducts();
+  const [cart, setCart] = useCart(products);
 
   const addToCart = (selectProduct) => {
     // console.log(product);
@@ -56,7 +39,11 @@ const Shop = () => {
         ))}
       </div>
       <div className="order-summery">
-        <Cart cart={cart}></Cart>
+        <Cart cart={cart}>
+          <Link to="/orders">
+            <button>Review Orders</button>
+          </Link>
+        </Cart>
       </div>
     </div>
   );
